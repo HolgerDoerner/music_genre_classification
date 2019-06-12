@@ -1,0 +1,9 @@
+sklearn
+joblib
+flask
+flask_cors
+datetime
+nltk
+langdetect
+setuptools
+nltk
