@@ -33,7 +33,7 @@ class Button extends React.Component {
   sendRequest() {
     let data = {};
     data.client_id = '1234567890';
-    data.data = document.getElementById('ta_lyrics').value;
+    data.data = document.getElementById('ta_lyrics').innerText;
 
     fetch('http://localhost:5000/api/v1/genre', {
       method: "POST",
@@ -49,7 +49,7 @@ class Button extends React.Component {
   }
 
   resetInput() {
-    document.getElementById('ta_lyrics').value = "";
+    document.getElementById('ta_lyrics').innerText = "";
     document.getElementById('output').innerHTML = "";
   }
 
@@ -77,12 +77,10 @@ class Main extends React.Component {
   render() {
     return (
       <div class="input">
-        <div>
-          <textarea id="ta_lyrics" class="ta_lyrics" cols="60" rows="20"></textarea>
-          <br />
-          <Button action="send" /> <Button action="reset" />
-          <OutputArea />
-        </div>
+        <div id="ta_lyrics" class="ta_lyrics" contentEditable="true"></div>
+        <br />
+        <Button action="send" /> <Button action="reset" />
+        <OutputArea />
       </div>
     );
   }
