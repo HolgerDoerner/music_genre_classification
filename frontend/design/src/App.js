@@ -5,7 +5,7 @@ class Header extends React.Component {
   render() {
     return (
       <div class="header" id="header">
-        <h1 class="header">Music Genre CLassifier v1.0</h1>
+        <h1 class="header">Music Genre Classifier</h1>
       </div>
     )
   }
@@ -17,7 +17,7 @@ class Button extends React.Component {
     this.state = {
       value: props.action === "send" ? "Send" : "Reset",
       action: props.action,
-      class: "buttons"
+      class: props.action === "send" ? "buttons primary" : "buttons",
     }
 
     if (props.action === 'send') {
@@ -44,13 +44,13 @@ class Button extends React.Component {
       body: JSON.stringify(data)
     })
       .then(res => res.json())
-      .then(res => document.getElementById('genre').innerHTML = res.result.toUpperCase())
+      .then(res => document.getElementById('output').innerHTML = res.result.toUpperCase())
       .catch(error => console.error(error));
   }
 
   resetInput() {
     document.getElementById('ta_lyrics').value = "";
-    document.getElementById('genre').innerHTML = "";
+    document.getElementById('output').innerHTML = "";
   }
 
   render() {
@@ -68,9 +68,7 @@ class Button extends React.Component {
 class OutputArea extends React.Component {
   render() {
     return (
-      <div class="output">
-        <b>Genre: <span id="genre" class="genre"></span></b>
-      </div>
+      <div id="output" class="output"></div>
     );
   }
 }

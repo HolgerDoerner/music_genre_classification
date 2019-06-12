@@ -1,9 +1,6 @@
-sklearn
-joblib
-flask
-flask_cors
-datetime
-nltk
-langdetect
-setuptools
-nltk
+scikit-learn==0.21.1
+joblib==0.13.2
+flask==1.0.3
+flask_cors==3.0.7
+nltk==3.4.1
+langdetect==1.0.7
