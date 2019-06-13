@@ -2,6 +2,7 @@ version: '3'
 
 services:
   frontend:
+    image: music_genre_classification:frontend-latest
     build:
       context: frontend/
       dockerfile: Dockerfile
@@ -14,6 +15,7 @@ services:
       - backend
 
   backend:
+    image: music_genre_classification:backend-latest
     build:
       context: backend/
       dockerfile: Dockerfile

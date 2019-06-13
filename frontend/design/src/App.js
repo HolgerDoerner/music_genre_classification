@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import './App.css';
 
 class Header extends React.Component {
@@ -11,21 +13,17 @@ class Header extends React.Component {
   }
 }
 
-class Button extends React.Component {
+class OutputArea extends React.Component {
+  render() {
+    return (
+      <div id="output" class="output"></div>
+    );
+  }
+}
+
+class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: props.action === "send" ? "Send" : "Reset",
-      action: props.action,
-      class: props.action === "send" ? "buttons primary" : "buttons",
-    }
-
-    if (props.action === 'send') {
-      this.state.onClick = this.sendRequest;
-    } else {
-      this.state.onClick = this.resetInput;
-    }
-
     this.sendRequest = this.sendRequest.bind(this);
     this.resetInput = this.resetInput.bind(this);
   }
@@ -33,7 +31,7 @@ class Button extends React.Component {
   sendRequest() {
     let data = {};
     data.client_id = '1234567890';
-    data.data = document.getElementById('ta_lyrics').innerText;
+    data.data = document.getElementById('ta_lyrics').value;
 
     fetch('http://localhost:5000/api/v1/genre', {
       method: "POST",
@@ -44,42 +42,34 @@ class Button extends React.Component {
       body: JSON.stringify(data)
     })
       .then(res => res.json())
-      .then(res => document.getElementById('output').innerHTML = res.result.toUpperCase())
+      .then(res => {
+        switch (res.code) {
+          case 0:
+            document.getElementById('output').innerHTML = res.result.toUpperCase();
+            break;
+
+          case 1:
+            alert('Accepted languages for lyrics: ' + res.result.toUpperCase());
+            break;
+        }
+      })
       .catch(error => console.error(error));
   }
 
   resetInput() {
-    document.getElementById('ta_lyrics').innerText = "";
+    document.getElementById('ta_lyrics').value = "";
     document.getElementById('output').innerHTML = "";
   }
 
   render() {
     return (
-      <input
-        type="button"
-        class={this.state.class}
-        value={this.state.value}
-        onClick={this.state.onClick}
-      />
-    );
-  }
-}
-
-class OutputArea extends React.Component {
-  render() {
-    return (
-      <div id="output" class="output"></div>
-    );
-  }
-}
-
-class Main extends React.Component {
-  render() {
-    return (
-      <div class="input">
-        <div id="ta_lyrics" class="ta_lyrics" contentEditable="true"></div>
-        <br />
-        <Button action="send" /> <Button action="reset" />
+      <div class="main">
+        <Form>
+          <Form.Group>
+            <Form.Control id="ta_lyrics" as="textarea" rows="14" />
+          </Form.Group>
+          <Button size="lg" variant="primary" onClick={this.sendRequest}>Send</Button> <Button size="lg" variant="secondary" onClick={this.resetInput}>Reset</Button>
+        </Form>
         <OutputArea />
       </div>
     );

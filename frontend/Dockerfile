@@ -5,4 +5,5 @@ COPY server/* ./
 RUN npm install --production --silent
 COPY design/build/ public/
 EXPOSE 3000
-CMD node server.js
+# CMD node server.js
+ENTRYPOINT [ "node", "server.js" ]

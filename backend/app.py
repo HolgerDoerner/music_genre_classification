@@ -17,7 +17,8 @@ clf = joblib.load('clf_pipeline_sgd.joblib')
 
 nltk.download('wordnet')
 
-genres = ['Pop', 'Hip-Hop', 'Rock', 'Metal', 'Country', 'Jazz', 'Electronic', 'Folk', 'R&B', 'Indie']
+genres = ['Pop', 'Hip-Hop', 'Rock', 'Metal', 'Country', 'Jazz', 'Electronic', 'Folk']
+accepted_languages = ['en']
 
 @app.route('/api/v1/genre', methods=['POST'])
 def recieve_data():
@@ -25,11 +26,18 @@ def recieve_data():
     if client_id != '1234567890':
         abort(401)
     data = request.json['data']
+    lang = _detect_language(data)
     response = {}
-    response['status'] = 'ok'
-    response['code'] = 200
-    response['timestamp'] = datetime.now().isoformat()
-    response['result'] = _process_data(data)
+    if lang not in accepted_languages:
+        response['status'] = 'language not accepted'
+        response['code'] = 1
+        response['timestamp'] = datetime.now().isoformat()
+        response['result'] = ', '.join(accepted_languages)
+    else:
+        response['status'] = 'ok'
+        response['code'] = 0
+        response['timestamp'] = datetime.now().isoformat()
+        response['result'] = _process_data(data)
     return jsonify(response)
 
 def _process_data(data):
@@ -61,6 +69,14 @@ def _mask_buzzwords(data, buzzwords=[], mask=''):
     for word in buzzwords:
         data_processed = re.sub(word, mask, data_processed, flags=re.I)
     return data_processed
+
+def _detect_language(data):
+    lang = ''
+    try:
+        lang = langdetect.detect(data)
+    except:
+        lang = 'unknown'
+    return lang
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
