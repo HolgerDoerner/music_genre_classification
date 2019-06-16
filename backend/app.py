@@ -43,8 +43,8 @@ def recieve_data():
 def _process_data(data):
     data_processed = _clean_input(data)
     data_processed = _mask_buzzwords(data_processed, buzzwords=genres, mask='')
-    prediction = clf.predict([data_processed])
-    return prediction[0]
+    prediction = clf.predict_proba([data_processed])
+    return list(prediction[0])
 
 def _clean_input(data):
     data = re.sub(r'[^A-Za-z]', ' ', data)
