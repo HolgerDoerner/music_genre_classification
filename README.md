@@ -1,5 +1,5 @@
 # Music Genre CLassification <!-- omit in toc -->
-An full-stack machine learning application which predicts the genre based only on text (lyrics).
+An full-stack Machine Learning application which predicts the Genre only based on Text (Lyrics).
 
 ## Table Of Contents <!-- omit in toc -->
 - [About](#about)
@@ -9,12 +9,14 @@ An full-stack machine learning application which predicts the genre based only o
 - [Build / Run](#build--run)
 
 ## About
-To get innto machine learning I needed a small project, so I decided to try sentiment analysis and text classification. From the beginning this was meant as a full-stack project, with the trained model in the backend and a single-page-application for the frontend.
+To get into machine learning I needed a small project, so I decided to try sentiment analysis and text classification. From the beginning this was meant as a full-stack project, with the trained model in the backend and a single-page-application for the frontend.
 
 The resulting application is meant to be run with docker-compose.
 
 ## The Data
 As datasource I downloaded a dataset from [Kaggle (380.000+ lyrics from MetroLyrics)](https://www.kaggle.com/gyani95/380000-lyrics-from-metrolyrics) which contains over 380.000 lyrics with metadata like artist, song name, year and also the genre. There were lyrics in serveral languages, but I only needed the english ones.
+
+To avoid possible Copyright-Issues, I am not able to include the Source-Dataset here, but feel free to download it from Kaggle yourself (link in text above) and place the .csv in the same folter as this README.md. Only needed if You want to experiment with the Data and my Jupyter-Notebook yourself, it is not needed for just running the application.
 
 The whole process of data preperation, feature engineering and training of the model are documented in the Jupyter Notebook `genre_classification.ipynb` in the root folder.
 
