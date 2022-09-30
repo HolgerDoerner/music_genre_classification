@@ -1,5 +1,5 @@
 scikit-learn==0.21.1
-joblib==0.13.2
+joblib==1.2.0
 flask==1.0.3
 flask_cors==3.0.7
 nltk==3.4.1
